@@ -1,0 +1,19 @@
+{
+  "name": "@ddy-test/utils",
+  "version": "1.0.0",
+  "description": "ddy-test/utils",
+  "author": "Dan <yddzling@163.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/utils.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
