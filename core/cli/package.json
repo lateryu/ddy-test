@@ -1,6 +1,6 @@
 {
   "name": "@ddy-test/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ddy",
   "author": "Dan <yddzling@163.com>",
   "homepage": "",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@ddy-test/get-npm-info": "file:../../utils/get-npm-info",
-    "@ddy-test/log": "^1.0.3",
+    "@ddy-test/log": "^1.0.4",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
     "dote": "^1.1.0",
