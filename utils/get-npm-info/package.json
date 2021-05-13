@@ -1,11 +1,11 @@
 {
   "name": "@ddy-test/get-npm-info",
   "version": "1.0.4",
-  "description": "get-npm-info",
+  "description": "> TODO: description",
   "author": "Dan <yddzling@163.com>",
   "homepage": "https://github.com/lateryu/ddy-test#readme",
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "lib/get-npm-info.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -13,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lateryu/ddy-test.git"
@@ -20,13 +23,12 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "bugs": {
-    "url": "https://github.com/lateryu/ddy-test/issues"
-  },
   "dependencies": {
     "axios": "^0.21.1",
     "semver": "^7.3.5",
     "url-join": "^4.0.1"
   },
-  "gitHead": "5dbab75176ca9c5335e2482b8c5d168e68af7a04"
+  "bugs": {
+    "url": "https://github.com/lateryu/ddy-test/issues"
+  }
 }

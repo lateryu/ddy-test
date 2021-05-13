@@ -14,7 +14,7 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "@ddy-test/get-npm-info": "file:../../utils/get-npm-info",
+    "@ddy-test/get-npm-info": "^1.0.4",
     "@ddy-test/log": "^1.0.4",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
@@ -34,7 +34,7 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "5dbab75176ca9c5335e2482b8c5d168e68af7a04",
+  "gitHead": "60910feb213ae588e2b32d5a281f6516f7070fb1",
   "publishConfig": {
     "access": "public"
   }
