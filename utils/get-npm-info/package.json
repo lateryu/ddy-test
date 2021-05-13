@@ -1,5 +1,5 @@
 {
-  "name": "get-npm-info",
+  "name": "@ddy-test/get-npm-info",
   "version": "1.0.3",
   "description": "get-npm-info",
   "author": "Dan <yddzling@163.com>",
@@ -27,5 +27,6 @@
     "axios": "^0.21.1",
     "semver": "^7.3.5",
     "url-join": "^4.0.1"
-  }
+  },
+  "gitHead": "5dbab75176ca9c5335e2482b8c5d168e68af7a04"
 }
