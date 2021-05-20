@@ -1,6 +1,6 @@
 {
-  "name": "@ddy-test/get-npm-info",
-  "version": "1.0.5",
+  "name": "@ddy-test/init",
+  "version": "1.0.0",
   "description": "> TODO: description",
   "author": "Dan <yddzling@163.com>",
   "homepage": "https://github.com/lateryu/ddy-test#readme",
@@ -23,12 +23,11 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "dependencies": {
-    "axios": "^0.21.1",
-    "semver": "^7.3.5",
-    "url-join": "^4.0.1"
-  },
   "bugs": {
     "url": "https://github.com/lateryu/ddy-test/issues"
+  },
+  "dependencies": {
+    "@ddy-test/command": "file:../../models/command",
+    "@ddy-test/log": "file:../../utils/log"
   }
 }
