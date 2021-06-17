@@ -54,7 +54,6 @@ async function exec() {
         try {
             // require(rootFile).call(null, Array.from(arguments));
             const args = Array.from(arguments);
-            console.log(args, 1111);
             const cmd = args[args.length - 1];
             const o = Object.create(null);
             Object.keys(cmd).forEach(key => {

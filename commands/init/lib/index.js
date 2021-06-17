@@ -20,13 +20,20 @@ class InitCommand extends Command {
    }
     async exec() {
       try {
-         const ret = await this.prepare();
-         if(ret) {
-
+         const projectInfo = await this.prepare();
+         if(projectInfo) {
+            log.verbose('projectInfo', projectInfo)
          }
+         // 下载模板
+         this.downloadTemplate();
       } catch (e) {
          log.error(e.message)
       }
+   }
+   
+   // 下载模板
+   downloadTemplate() {
+
    }
     async prepare() {
       const localPath = process.cwd();
@@ -62,7 +69,7 @@ class InitCommand extends Command {
    
    async getProjectInfo() {
       // 1. 选择创建的时组件还是项目
-      const projectInfo = {};
+      let projectInfo = {};
       const { type } = await inquirer.prompt({
          type: 'list',
          message: '请选择初始化类型',
@@ -78,7 +85,7 @@ class InitCommand extends Command {
       });
       // 2. 获取项目基本信息
       if (type === TYPE_PROJECT) {
-         const o = await inquirer.prompt([{
+         const project = await inquirer.prompt([{
             type: 'input',
             name: 'projectName',
             message: '请输入项目名称',
@@ -103,10 +110,10 @@ class InitCommand extends Command {
             name: 'projectVersion',
             message: '请输入项目版本号',
             default: '1.0.0',
-            validate: (v) => {
+            validate: function(v) {
                var done = this.async();
                setTimeout(function() {
-                  if(!!semver.valid(v)) {
+                  if(!(!!semver.valid(v))) {
                      done('请输入合法的版本号');
                      return;
                   }
@@ -121,8 +128,10 @@ class InitCommand extends Command {
                }
             },
          }]);
-         console.log(o,  11111111);
-
+         projectInfo = {
+            type,
+            ...project,
+         };
       } else if(type === TYPE_COMPONENT) {
 
       }

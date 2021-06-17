@@ -22,7 +22,7 @@ async function core() {
     try {
         await prepare();
         registerCommand();
-    } catch(e) {
+    } catch (e) {
         log.error(e.message);
         if (program.debug) {
             console.log(e);
@@ -44,7 +44,7 @@ async function prepare() {
 const program = new commander.Command();
 
 // 命令注册
- function registerCommand() {
+function registerCommand() {
     program
         .name(Object.keys(pkg.bin)[0])
         .usage('<command> [options]')
@@ -53,9 +53,9 @@ const program = new commander.Command();
         .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径');
 
     program
-    .command('init [projectName]')
-    .option('-f, --force', '是否强制初始化项目')
-    .action(exec);
+        .command('init [projectName]')
+        .option('-f, --force', '是否强制初始化项目')
+        .action(exec);
 
     // 开启debug模式
     program.on('option:debug', function () {
@@ -68,26 +68,26 @@ const program = new commander.Command();
     });
 
     // 指定targetPath 
-    program.on('option:targetPath', function() {
+    program.on('option:targetPath', function () {
         process.env.CLI_TARGET_PATH = program.targetPath;
     });
 
 
-     // 对未知命令监听
-     program.on('command:*', function(obj) {
+    // 对未知命令监听
+    program.on('command:*', function (obj) {
         const availableCommands = program.commands.map(cmd => cmd.name());
         console.log(colors.red('未知的命令:' + obj[0]));
-        if (availableCommands.length > 0 ) {
+        if (availableCommands.length > 0) {
             console.log(colors.red('可用的命令:' + availableCommands.join(',')));
         }
     })
-    
+
     // if (program.args && program.args.length < 1 ) {
     //     program.outputHelp();
     //     console.log();
     // }
     program.parse(process.argv);
- };
+};
 
 
 

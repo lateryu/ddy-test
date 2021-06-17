@@ -7,7 +7,6 @@ const semver = require('semver');
 
 
 function getNpmInfo(npmName, registry) {
-    console.log(npmName,registry);
     if (!npmName) {
         return null;
     }
@@ -30,6 +29,7 @@ async function getNpmVersions(npmName, registry) {
     }
 }
 
+// 获取满足条件的版本号 排序
 function getSemverVersion(baseVersion, versions) {
     versions.filter(item => semver.satisfies(item, `^${baseVersion}`)).sort((a, b) => (
         semver.gt(b, a)
@@ -37,6 +37,7 @@ function getSemverVersion(baseVersion, versions) {
     return versions;
 }
 
+// 获取最新的版本
 async function getNpmSemverVersion(baseVersion, npmName, registry) {
     const versions = await getNpmVersions(npmName, registry);
     const newVersion = getSemverVersion(baseVersion, versions);
@@ -46,7 +47,7 @@ async function getNpmSemverVersion(baseVersion, npmName, registry) {
 
 }
 
-function getDefaultRegistry(isOriginal) {
+function getDefaultRegistry(isOriginal = false) {
     return isOriginal ? 'https://registry.npmjs.org/' : 'https://registry.npm.taobao.org/';
 }
 

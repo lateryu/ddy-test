@@ -46,16 +46,16 @@ class Command {
     }
 
      // 获取最低node版本
- checkNodeVersion() {
-    // 第一步， 获取当前node版本号
-    const currentVersion = process.version;
-    // 第二步，比对最低版本
-    const lowestVersion = LOWEST_NODE_VERSION;
-    // 比对
-    if(!semver.gte(currentVersion, lowestVersion)) {
-        throw new Error(colors.red(`ddy-test 需要安装 v${lowestVersion} 以上版本的node.js`))
-    }
-};
+    checkNodeVersion() {
+        // 第一步， 获取当前node版本号
+        const currentVersion = process.version;
+        // 第二步，比对最低版本
+        const lowestVersion = LOWEST_NODE_VERSION;
+        // 比对
+        if(!semver.gte(currentVersion, lowestVersion)) {
+            throw new Error(colors.red(`ddy-test 需要安装 v${lowestVersion} 以上版本的node.js`))
+        }
+    };
 }
 
 

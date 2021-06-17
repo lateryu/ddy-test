@@ -4,12 +4,13 @@
   "description": "ddy-test dev",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "husky": "^6.0.0",
     "lerna": "^4.0.0"
   }
 }

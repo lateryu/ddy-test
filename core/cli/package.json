@@ -39,5 +39,8 @@
   "gitHead": "60910feb213ae588e2b32d5a281f6516f7070fb1",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "husky": "^6.0.0"
   }
 }
