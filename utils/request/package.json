@@ -1,6 +1,6 @@
 {
-  "name": "@ddy-test/init",
-  "version": "1.0.0",
+  "name": "@ddy-test/request",
+  "version": "1.0.5",
   "description": "> TODO: description",
   "author": "Dan <yddzling@163.com>",
   "homepage": "https://github.com/lateryu/ddy-test#readme",
@@ -27,14 +27,6 @@
     "url": "https://github.com/lateryu/ddy-test/issues"
   },
   "dependencies": {
-    "@ddy-test/command": "file:../../models/command",
-    "@ddy-test/log": "file:../../utils/log",
-    "@ddy-test/request": "file:../../utils/request",
-    "@ddy-test/package": "file:../../models/Package",
-    "@ddy-test/utils": "file:../../utils/utils",
-    "fs-extra": "^10.0.0",
-    "inquirer": "^8.1.0",
-    "semver": "^7.3.5",
-    "user-home": "^3.0.0"
+    "axios": "^0.21.1"
   }
 }
