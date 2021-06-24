@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@ddy-test/package": "file:../../models/package",
-    "@ddy-test/log": "file:../../utils/log"
+    "@ddy-test/log": "file:../../utils/log",
+    "@ddy-test/utils": "file:../../utils/utils"
   }
 }

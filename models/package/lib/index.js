@@ -102,6 +102,9 @@ class Package {
     const latestPackageVersion = await getNpmLatestVersion(this.packageName);
     // 查询最新的版本号对应的路径是否存存在
     const latestFilePath = this.gerSpecificCacheFilePath(latestPackageVersion);
+    console.log(latestPackageVersion, "22222");
+    console.log(pathExists(latestFilePath), "11111");
+    console.log(latestFilePath, "latestFilePath");
     // 若果不存在, 则直接安装最新版本
     if (!pathExists(latestFilePath)) {
       await npminstall({
@@ -118,7 +121,7 @@ class Package {
       // 更新最新版本号
       this.packageVersion = latestPackageVersion;
     } else {
-      return latestFilePath;
+      this.packageVersion = latestPackageVersion;
     }
   }
 

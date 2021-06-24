@@ -4,6 +4,7 @@ const cp = require("child_process");
 const path = require("path");
 const Package = require("@ddy-test/package");
 const log = require("@ddy-test/log");
+const { exec: custonExec } = require("@ddy-test/utils");
 
 // 可以是服务端根据用户登录信息获取
 const SETTINGS = {
@@ -77,7 +78,7 @@ async function exec() {
       const code = `require('${rootFile}').call(null,${JSON.stringify(args)} )`;
 
       // window cp.spawn('cmd', ['/c', 'node', '-e', code]); // /c表示静默执行
-      const child = spawn("node", ["-e", code], {
+      const child = custonExec("node", ["-e", code], {
         // e表示执行代码
         cwd: process.cwd(),
         /**
@@ -96,14 +97,6 @@ async function exec() {
       log.error(e.message);
     }
   }
-}
-
-// 兼容window
-function spawn(command, args, options) {
-  const win32 = process.platform === "win32";
-  const cmd = win32 ? "cmd" : command;
-  const cmdArgs = win32 ? ["/c"].concat(command, args) : args;
-  return cp.spawn(cmd, cmdArgs, options || {});
 }
 
 module.exports = exec;
