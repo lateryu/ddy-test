@@ -165,7 +165,7 @@ class InitCommand extends Command {
     }
 
     // 启用模板渲染
-    const ignore = ["node_modules/**"];
+    const ignore = ["node_modules/**", "public/**"];
     await this.ejsRender({ ignore });
 
     // 安装依赖
@@ -309,7 +309,17 @@ class InitCommand extends Command {
 
   async getProjectInfo() {
     // 1. 选择创建的时组件还是项目
+    function isValidName(v) {
+      return /^[a-zA-Z]+([-][a-zA-Z][a-zA-Z0-9]*|[_][a-zA-Z][a-zA-Z0-9]*|[a-zA-Z0-9])*$/.test(
+        v
+      );
+    }
     let projectInfo = {};
+    let isProjectNameValid = false;
+    if (isValidName(this.projectName)) {
+      isProjectNameValid = true;
+      projectInfo.projectName = this.projectName;
+    }
     const { type } = await inquirer.prompt({
       type: "list",
       message: "请选择初始化类型",
@@ -326,69 +336,100 @@ class InitCommand extends Command {
         },
       ],
     });
+    const title = type === TYPE_PROJECT ? "项目" : "组件";
+
+    log.verbose("type:", type);
+    this.template = this.template.filter((template) =>
+      template.tag.includes(type)
+    );
+    const projectNamePrompt = {
+      type: "input",
+      name: "projectName",
+      message: `请输入${title}名称`,
+      default: "",
+      validate: function (v) {
+        // 用户输入不通过时的提示文案
+        const done = this.async();
+        setTimeout(function () {
+          if (!isValidName(v)) {
+            done("请输入合法的名称");
+            return;
+          }
+          done(null, true);
+        }, 0);
+        return;
+      },
+      filter: (v) => {
+        return v;
+      },
+    };
+    const projectPrompt = [];
+    if (!isProjectNameValid) {
+      projectPrompt.push(projectNamePrompt);
+    }
+    projectPrompt.push(
+      {
+        type: "input",
+        name: "projectVersion",
+        message: `请输入${title}版本号`,
+        default: "1.0.0",
+        validate: function (v) {
+          const done = this.async();
+          setTimeout(function () {
+            if (!!!semver.valid(v)) {
+              done("请输入合法的版本号");
+              return;
+            }
+            done(null, true);
+          }, 0);
+        },
+        filter: (v) => {
+          if (!!semver.valid(v)) {
+            return semver.valid(v);
+          } else {
+            return v;
+          }
+        },
+      },
+      {
+        type: "list",
+        name: "projectTemplate",
+        message: `请选择${title}模板`,
+        choices: this.getTemplateChoice(),
+      }
+    );
     // 2. 获取项目基本信息
     if (type === TYPE_PROJECT) {
-      const project = await inquirer.prompt([
-        {
-          type: "input",
-          name: "projectName",
-          message: "请输入项目名称",
-          default: "",
-          validate: function (v) {
-            // 用户输入不通过时的提示文案
-            const done = this.async();
-            setTimeout(function () {
-              if (
-                !/^[a-zA-Z]+([-][a-zA-Z][a-zA-Z0-9]*|[_][a-zA-Z][a-zA-Z0-9]*|[a-zA-Z0-9])*$/.test(
-                  v
-                )
-              ) {
-                done("请输入合法的名称");
-                return;
-              }
-              done(null, true);
-            }, 0);
-            return;
-          },
-          filter: (v) => {
-            return v;
-          },
-        },
-        {
-          type: "input",
-          name: "projectVersion",
-          message: "请输入项目版本号",
-          default: "1.0.0",
-          validate: function (v) {
-            const done = this.async();
-            setTimeout(function () {
-              if (!!!semver.valid(v)) {
-                done("请输入合法的版本号");
-                return;
-              }
-              done(null, true);
-            }, 0);
-          },
-          filter: (v) => {
-            if (!!semver.valid(v)) {
-              return semver.valid(v);
-            } else {
-              return v;
-            }
-          },
-        },
-        {
-          type: "list",
-          name: "projectTemplate",
-          message: "请选择项目模板",
-          choices: this.getTemplateChoice(),
-        },
-      ]);
+      const project = await inquirer.prompt(projectPrompt);
       projectInfo = {
+        ...projectInfo,
         type,
         ...project,
       };
     } else if (type === TYPE_COMPONENT) {
+      const descriptionPrompt = {
+        type: "input",
+        name: "componentDescription",
+        message: "请输入描述信息",
+        validate: function (v) {
+          const done = this.async();
+          setTimeout(function () {
+            if (!v) {
+              done("请输入描述信息");
+              return;
+            }
+            done(null, true);
+          }, 0);
+        },
+      };
+      projectPrompt.push(descriptionPrompt);
+      // 获取组件基本信息
+      const component = await inquirer.prompt(projectPrompt);
+      projectInfo = {
+        ...projectInfo,
+        type,
+        ...component,
+      };
     }
     // 生成className, 转换成驼峰形式
     if (projectInfo.projectName) {
@@ -399,6 +440,9 @@ class InitCommand extends Command {
     }
     if (projectInfo.projectVersion) {
       projectInfo.version = projectInfo.projectVersion;
+    }
+    if (projectInfo.componentDescription) {
+      projectInfo.description = projectInfo.componentDescription;
     }
     return projectInfo;
   }
