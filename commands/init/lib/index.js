@@ -20,7 +20,7 @@ const TYPE_COMPONENT = "component";
 const TEMPLATE_TYPE_NORMAL = "normal";
 const TEMPLATE_TYPE_CUSTOM = "custom"; // 自定义模板
 
-const WHITE_COMMAND = ["npm", "cnpm"];
+const WHITE_COMMAND = ["npm", "cnpm"]; // 白名单,避免执行危险操作
 
 class InitCommand extends Command {
   init() {
@@ -199,7 +199,34 @@ class InitCommand extends Command {
   }
 
   // 自定义模板的安装
-  async installCustomTemplate() {}
+  async installCustomTemplate() {
+    if (await this.templateNpm.exists()) {
+      const rootFile = this.templateNpm.getRootFilePath();
+      if (fs.existsSync(rootFile)) {
+        log.notice("开始执行定义模板");
+        const templatePath = path.resolve(
+          this.templateNpm.cacheFilePath,
+          "template"
+        );
+        const options = {
+          templateInfo: this.templateInfo,
+          projectInfo: this.projectInfo,
+          sourcePath: templatePath,
+          targetPath: process.cwd(),
+        };
+        // 拼接自定义模板的执行文件路劲
+        const code = `require('${rootFile}')(${JSON.stringify(options)})`;
+        log.verbose("code", code);
+        await execAsync("node", ["-e", code], {
+          stdio: "inherit",
+          cwd: process.cwd(),
+        });
+        log.success("自定义模板安装成功");
+      } else {
+        throw new Error("自定义模板入口文件不存在");
+      }
+    }
+  }
 
   // 下载模板
   async downloadTemplate() {
