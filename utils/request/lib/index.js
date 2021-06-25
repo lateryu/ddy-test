@@ -32,7 +32,7 @@ const request = function () {
     {
       name: "vue3标准模板",
       npmName: "ddy-test-vue3-template",
-      npmVersion: "1.0.1",
+      npmVersion: "1.0.2",
       installCommand: "npm install",
       startCommand: "npm run serve",
       type: "normal",
@@ -50,7 +50,7 @@ const request = function () {
     {
       name: "ddy-test自定义模板",
       npmName: "ddy-test-custom-template",
-      npmVersion: "1.0.4",
+      npmVersion: "1.0.6",
       type: "custom",
       installCommand: "npm install",
       startCommand: "npm start",
